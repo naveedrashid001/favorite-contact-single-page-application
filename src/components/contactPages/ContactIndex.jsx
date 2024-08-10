@@ -35,7 +35,9 @@ class ContactIndex extends React.Component{
                     email:"abidjan55@gmail.com",
                     isFavorite: false,
                 }
-            ]
+            ],
+            SelectedContact:undefined,
+            IsUpdated:false,
         }
 
     }
@@ -78,6 +80,46 @@ class ContactIndex extends React.Component{
         status:"success", msg:"Contact was added successfully"
        }
     }
+    // update single contact 
+    UpdatededContact = (updatedContact) => {
+        if (updatedContact.name === "") {
+            return {
+                status: "failure",
+                msg: "the name can't be empty"
+            };
+        } else if (updatedContact.phone === "") {
+            return {
+                status: "failure",
+                msg: "the phone can't be empty"
+            };
+        }
+    
+        this.setState((prevState) => {
+            const updatedList = prevState.contactlist.map((contact) => {
+                if (contact.id === updatedContact.id) {
+                    return {
+                        ...contact,
+                        name: updatedContact.name,
+                        email: updatedContact.email,
+                        phone: updatedContact.phone
+                    };
+                }
+                return contact;
+            });
+    
+            return {
+                contactlist: updatedList,
+                SelectedContact: undefined,
+                IsUpdated: false
+            };
+        });
+    
+        return {
+            status: "success",
+            msg: "Contact was Updated successfully"
+        };
+    };
+    
     //  handle toggle function 
     HandleToggleFavroit = (contact)=>{
         this.setState((prevState)=>{
@@ -121,6 +163,37 @@ class ContactIndex extends React.Component{
            })
     }
 
+    //  remove  all contact
+    HandleRemoveAllContact = ()=>{
+        this.setState(()=>{
+           return{
+            contactlist:[]
+           }
+        })
+    }
+    //  update contact
+    HandleUpdateContact = (contact)=>{
+        this.setState(()=>{
+            
+           return{
+            SelectedContact:contact,
+            IsUpdated:true,
+            
+           }
+        })
+    }
+    //  cancle update button
+    HandleCancleUpdateContact = (contact)=>{
+        this.setState(()=>{
+            console.log(contact)
+           return{
+            SelectedContact:undefined,
+            IsUpdated:false,
+            
+           }
+        })
+    }
+
     //  rendering 
 
     render(){
@@ -135,13 +208,21 @@ class ContactIndex extends React.Component{
                         </div>
                         {/* remove all contact */}
                         <div className="col-3 ">
-                            <RemoveAllContact/>
+                            <RemoveAllContact HandleRemoveAllContact ={this.HandleRemoveAllContact}/>
+
                         </div>
                     </div>
                     {/* add contact */}
                     <div className="row py-2">
                         <div className="col-8 offset-2 row">
-                            <AddContact HandleAddContact = {this.HandleAddContact}/>
+                        <AddContact 
+    HandleAddContact={this.HandleAddContact}
+    IsUpdated={this.state.IsUpdated}
+    SelectedContact={this.state.SelectedContact}
+    CancleUpdateContact={this.HandleCancleUpdateContact}
+    UpdatededContact={this.UpdatededContact}
+/>
+
                             </div>
                     </div>
 
@@ -153,6 +234,7 @@ class ContactIndex extends React.Component{
                             )} 
                             FavriotClick = {this.HandleToggleFavroit}
                             ClickDelete = {this.DeleteContact}
+                            updatedclick= {this.HandleUpdateContact}
                              />
                             
                             </div>
@@ -166,6 +248,7 @@ class ContactIndex extends React.Component{
                             )}
                              FavriotClick = {this.HandleToggleFavroit}
                              ClickDelete = {this.DeleteContact}
+                             updatedclick= {this.HandleUpdateContact}
                              />
                        </div>
                     </div>

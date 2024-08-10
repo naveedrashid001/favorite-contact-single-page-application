@@ -13,6 +13,7 @@ const FavrioutContact = (props)=>{
                  key={index} 
                  FavriotClick ={props.FavriotClick}
                  ClickDelete = {props.ClickDelete}
+                 updatedclick={props.updatedclick}
                   ></Contact>
             ))}
     </div>
