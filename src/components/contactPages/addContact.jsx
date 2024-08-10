@@ -15,6 +15,8 @@ class AddContact extends React.Component{
         const email = e.target.elements.contactEmail.value.trim();
         const phone = e.target.elements.contactPhone.value.trim();
         const id = e.target.elements.contactId.value.trim();
+        
+        console.log('Form data:', { name, email, phone, id });
     
         let response;
     
@@ -29,10 +31,11 @@ class AddContact extends React.Component{
             response = this.props.HandleAddContact({
                 name,
                 email,
-                phone,
-                id
+                phone
             });
         }
+    
+        console.log('Response:', response);
     
         if (response.status === "success") {
             this.setState({ errorMessage: undefined, successMessage: response.msg });
@@ -41,6 +44,7 @@ class AddContact extends React.Component{
             this.setState({ errorMessage: response.msg, successMessage: undefined });
         }
     };
+    
     
 // cancle 
 HandleCancle=(()=>{
@@ -63,7 +67,7 @@ this.props.CancleUpdateContact()
             </div>
 
             <div className="col-12 col-md-4 p-1">
-                <input type="text" className="form-control form-control-sm" name="contactEmail" placeholder="Email.."  defaultValue={this.props.IsUpdated ? this.props.SelectedContact.email :""} />
+                <input type="email" className="form-control form-control-sm" name="contactEmail" placeholder="Email.."  defaultValue={this.props.IsUpdated ? this.props.SelectedContact.email :""} />
             </div>
 
             <div className="col-12 col-md-4 p-1">

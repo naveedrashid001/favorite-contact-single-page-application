@@ -82,6 +82,9 @@ class ContactIndex extends React.Component{
     }
     // update single contact 
     UpdatededContact = (updatedContact) => {
+        // Ensure ID is a number
+        const contactId = Number(updatedContact.id);
+    
         if (updatedContact.name === "") {
             return {
                 status: "failure",
@@ -95,16 +98,16 @@ class ContactIndex extends React.Component{
         }
     
         this.setState((prevState) => {
-            const updatedList = prevState.contactlist.map((contact) => {
-                if (contact.id === updatedContact.id) {
+            const updatedList = prevState.contactlist.map((obj) => {
+                if (obj.id === contactId) {
                     return {
-                        ...contact,
+                        ...obj,
                         name: updatedContact.name,
                         email: updatedContact.email,
                         phone: updatedContact.phone
                     };
                 }
-                return contact;
+                return obj;
             });
     
             return {
@@ -119,6 +122,7 @@ class ContactIndex extends React.Component{
             msg: "Contact was Updated successfully"
         };
     };
+
     
     //  handle toggle function 
     HandleToggleFavroit = (contact)=>{
