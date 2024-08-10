@@ -17,21 +17,21 @@ class ContactIndex extends React.Component{
                 {
                     id:1,
                     name:"Ishfaq Ali",
-                    phone: "0313-0345792",
+                    phone: "+92 320345792",
                     email:"ishfaqali55@gmail.com",
                     isFavorite: true,
                 },
                 {
                     id:2,
                     name:"Awais Saleem",
-                    phone: "0314-5687937",
+                    phone: "+92 145687937",
                     email:"awais1212@gmail.com",
                     isFavorite: true,
                 },
                 {
                     id:3,
                     name:"Abid Jan",
-                    phone: "0316-0465340",
+                    phone: "+92 3160465340",
                     email:"abidjan55@gmail.com",
                     isFavorite: false,
                 }
@@ -107,6 +107,20 @@ class ContactIndex extends React.Component{
         })
     }
 
+    // handle random contact
+    HandleAddRandomContact = (newcontact)=>{
+        const finalContact ={
+            ...newcontact,
+            id: this.state.contactlist[this.state.contactlist.length-1].id+1,
+            isFavorite:false,
+           }
+           this.setState((prevState)=>{
+            return{
+                contactlist : prevState.contactlist.concat([finalContact])
+            }
+           })
+    }
+
     //  rendering 
 
     render(){
@@ -115,9 +129,11 @@ class ContactIndex extends React.Component{
                 <Header/>
                 <div className="container" style={{minHeight:"85vh"}}>
                     <div className="row py-3">
+                        {/* add random contact */}
                         <div className="col-3 offset-3">
-                            <AddRandomContact/>
+                            <AddRandomContact HandleAddRandomContact = {this.HandleAddRandomContact}/>
                         </div>
+                        {/* remove all contact */}
                         <div className="col-3 ">
                             <RemoveAllContact/>
                         </div>
