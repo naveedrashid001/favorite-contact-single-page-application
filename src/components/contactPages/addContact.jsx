@@ -35,7 +35,7 @@ class AddContact extends React.Component{
             });
         }
     
-        console.log('Response:', response);
+        console.log(response);
     
         if (response.status === "success") {
             this.setState({ errorMessage: undefined, successMessage: response.msg });
